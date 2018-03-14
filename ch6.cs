@@ -19,7 +19,8 @@ namespace Case_Study_1
             //initialize variables
             double FEE = 25, revenue;
             int thisYearContestantsCount, lastYearContestantsCount;
-                        
+            int singers = 0, dancers = 0, musicians = 0, others = 0;
+
 
             //get numbers, check if between 0-30
             do
@@ -61,17 +62,62 @@ namespace Case_Study_1
             //asks for contestant names and talent code
             for (int i = 0; i < thisYearContestantsCount; i++)
             {
-                Console.Write("Enter contestant #{0} name: ", (i + 1));
-                names[i] = Console.ReadLine();
+                Write("Enter contestant #{0} name: ", (i + 1));
+                names[i] = ReadLine();
                 string userInput;
+                WriteLine("What is {0}'s talent?", names[i]);
                 do
                 {
-                    Console.Write("Enter 'S' for Singing, 'D' for dancing, 'M' for music, or 'O' for other: ");
-                    userInput = (Console.ReadLine()).ToUpper();
+                    Write("Enter 'S' for Singing, 'D' for dancing, 'M' for music, or 'O' for other: ");
+                    userInput = (ReadLine()).ToUpper();
                 }
                 while ((userInput != "S") && (userInput != "D") && (userInput != "M") && (userInput != "O"));
                 talents[i] = userInput;
+
+                //increment respective talent counter
+                switch (userInput)
+                {
+                    case "S":
+                        singers += 1;
+                        break;
+                    case "D":
+                        dancers += 1;
+                        break;
+                    case "M":
+                        musicians += 1;
+                        break;
+                    case "O":
+                        others += 1;
+                        break;
+                    default:
+                        WriteLine("Something went wrong.");
+                        break;
+                }
             }
+
+            //display numbers of each type of contestant
+            WriteLine("Number of singers this year: {0}", singers);
+            WriteLine("Number of dancers this year: {0}", dancers);
+            WriteLine("Number of musicians this year: {0}", musicians);
+            WriteLine("Number of others: {0}", others);
+
+            //display names of contestants if user would like
+            string contName = "";
+            WriteLine("Check names of all contestants in each category?");
+            do
+            {
+                Write("'S' for singers, 'D' for dancers, 'M' for musicians, 'O' for others, or 'q' to quit: ");
+                contName = ReadLine();
+                for (int x = 0; x < talents.Length; x++)
+                {
+                    if (talents[x] == contName)
+                    {
+                        Write("{0} | ", names[x]);
+                    }
+                }
+                WriteLine();
+            }
+            while (contName != "q");
 
             ReadLine();
         }
